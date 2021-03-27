@@ -1,6 +1,22 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const app = express();
+
+const mongoUri = 'mongodb+srv://admin:muMb1LK3F9Mh4bSk@cluster0.nuy5d.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+});
+
+mongoose.connection.on('connected', () => {
+    console.log('Connected to MongoDb instance')
+});
+
+mongoose.connection.on('error', (err) => {
+    console.log('Error connected to MongoDb instance', err)
+});
 
 app.get('/', (req, res) => {
     res.send('Initial Setup done')
