@@ -1,4 +1,5 @@
-const { User } = require('../models/user');
+const mongoose = require('mongoose');
+const User = mongoose.model('User')
 const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
@@ -11,12 +12,12 @@ module.exports = (req, res, next) => {
     const token = authorization.replace('Bearer ', '');
     jwt.verify(token, 'MYSECRETKEY', async (err, payload) => {
         if (err) {
-            res.status(401).send({ error: 'Invalid User' })
+            return res.status(401).send({ error: 'Invalid User' })
         }
-
         const { userId } = payload;
 
         const user = await User.findById(userId);
         req.user = user;
+        next();
     })
 }
