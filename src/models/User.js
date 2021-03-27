@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const SALT_I = 10;
 
 const userSchema = new mongoose.Schema({
